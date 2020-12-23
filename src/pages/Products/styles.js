@@ -190,6 +190,7 @@ export const Container = styled.div`
           &.loader {
             border: none;
             justify-content: center;
+            cursor: default;
 
             img {
               width: 25px;
@@ -199,6 +200,10 @@ export const Container = styled.div`
               font-weight: 700;
               color: #ccc;
               width: auto;
+            }
+
+            &:hover {
+              filter: none;
             }
           }
         }

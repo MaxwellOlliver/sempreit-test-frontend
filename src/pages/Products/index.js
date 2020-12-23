@@ -76,6 +76,7 @@ function Products({ history }) {
         },
       });
 
+      setNext(response.data.next);
       setProducts(response.data.products);
     },
     [token]
@@ -194,7 +195,7 @@ function Products({ history }) {
           <ul id="product-list" onScroll={getNextProducts}>
             {products.length === 0 && (
               <li className="no-products">
-                <span>no products added</span>
+                <span>no products found</span>
               </li>
             )}
             {products.map((product) => (
