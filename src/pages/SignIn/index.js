@@ -99,7 +99,7 @@ function SignIn({ history }) {
             <span>You must be signed in to access the Products page</span>
           </div>
         )}
-        <h3>Sing In</h3>
+        <h3>Sign In</h3>
 
         <Input
           name="email"

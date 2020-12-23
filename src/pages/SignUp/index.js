@@ -109,7 +109,7 @@ function SignUp({ history }) {
   return (
     <Container>
       <form onSubmit={handleSubmit}>
-        <h3>Sing Up</h3>
+        <h3>Sign Up</h3>
 
         <Input
           name="name"
