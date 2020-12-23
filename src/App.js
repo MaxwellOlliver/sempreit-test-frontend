@@ -1,7 +1,9 @@
-import { UserProvider } from './context/UserContext';
 import { ToastContainer } from 'react-toastify';
+import { UserProvider } from './context/UserContext';
+
 import { Global } from './global/globalStyle';
 import Routes from './routes';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {

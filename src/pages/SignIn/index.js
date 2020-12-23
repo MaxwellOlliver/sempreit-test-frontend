@@ -1,15 +1,18 @@
 import React, { useContext, useState } from 'react';
-import Input from '../../components/Input';
 import { Link } from 'react-router-dom';
 
-import { Container } from './styles';
 import { useQuery } from '../../hooks/useQuery';
-import { api } from '../../services/api';
 import { UserContext } from '../../context/UserContext';
+
+import Input from '../../components/Input';
 import Button from '../../components/Button';
+
+import { api } from '../../services/api';
+import { Container } from './styles';
 
 function SignIn({ history }) {
   const query = useQuery();
+  const fallback = query.get('fallback');
   const [email, setEmail] = useState(query.get('email') || '');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({
@@ -91,6 +94,11 @@ function SignIn({ history }) {
   return (
     <Container>
       <form onSubmit={handleSubmit}>
+        {fallback === 'true' && (
+          <div className="fallback">
+            <span>You must be signed in to access the Products page</span>
+          </div>
+        )}
         <h3>Sing In</h3>
 
         <Input

@@ -72,6 +72,7 @@ export const Container = styled.div`
     height: calc(100% - 80px);
     padding: 50px 120px;
     padding-top: 20px;
+
     .modal-container {
       width: 100%;
       height: 100vh;
@@ -183,6 +184,17 @@ export const Container = styled.div`
           span {
             width: calc(100% / 2);
             padding-left: 20px;
+          }
+
+          &.no-products {
+            border: none;
+            justify-content: center;
+
+            span {
+              font-weight: 700;
+              color: #ccc;
+              width: auto;
+            }
           }
         }
       }

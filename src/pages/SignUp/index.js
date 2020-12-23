@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import Input from '../../components/Input';
 import { Link } from 'react-router-dom';
-import { api } from '../../services/api';
 
-import { Container } from '../SignIn/styles';
+import Input from '../../components/Input';
 import Button from '../../components/Button';
+
+import { api } from '../../services/api';
+import { Container } from '../SignIn/styles';
 
 function SignUp({ history }) {
   const [email, setEmail] = useState('');

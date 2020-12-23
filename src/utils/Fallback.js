@@ -6,7 +6,7 @@ function Fallback() {
   return token ? (
     <Redirect to={{ pathname: '/products' }} />
   ) : (
-    <Redirect to={{ pathname: '/signin' }} />
+    <Redirect to={{ pathname: '/signin?fallback=true' }} />
   );
 }
 

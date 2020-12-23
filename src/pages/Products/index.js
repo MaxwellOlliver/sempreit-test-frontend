@@ -1,14 +1,16 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
-import { UserContext } from '../../context/UserContext';
 import { CgShoppingBag } from 'react-icons/cg';
 import { FiSearch } from 'react-icons/fi';
-import { debounce } from 'lodash';
-import Button from '../../components/Button';
 
-import { Container } from './styles';
-import { api } from '../../services/api';
+import { UserContext } from '../../context/UserContext';
+import Button from '../../components/Button';
 import ProductModal from '../../components/ProductModal';
+import Loader from '../../components/Loader';
+
+import { api } from '../../services/api';
+import { Container } from './styles';
 
 function Products({ history }) {
   const [products, setProducts] = useState([]);
@@ -16,7 +18,8 @@ function Products({ history }) {
   const [selectedProduct, setSelectedProduct] = useState({});
   const [modal, setModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { user, removeToken, token } = useContext(UserContext);
 
@@ -32,6 +35,7 @@ function Products({ history }) {
       });
 
       setProducts(response.data.products);
+      setLoading(false);
     })();
   }, []);
 
@@ -91,7 +95,7 @@ function Products({ history }) {
   };
 
   const onDeleteProduct = async () => {
-    setLoading(true);
+    setDeleteLoading(true);
     await Promise.all(
       selectedProducts.map(
         async (id) =>
@@ -110,11 +114,12 @@ function Products({ history }) {
     );
     setSelectedProducts([]);
     setDeleteModal(false);
-    setLoading(false);
+    setDeleteLoading(false);
   };
 
   return (
     <Container>
+      {loading && <Loader />}
       <nav>
         <div className="title">
           <CgShoppingBag size={25} color="#333" />
@@ -164,6 +169,11 @@ function Products({ history }) {
             <span>value (BRL)</span>
           </label>
           <ul>
+            {products.length === 0 && (
+              <li className="no-products">
+                <span>no products added</span>
+              </li>
+            )}
             {products.map((product) => (
               <li
                 key={product.id}
@@ -171,6 +181,7 @@ function Products({ history }) {
                   selectedProducts.includes(product.id) ? 'selected' : ''
                 }
                 onClick={() => selectDeselect(product.id)}
+                title="Click to select"
               >
                 <span>{product.description}</span>
                 <span>
@@ -194,14 +205,15 @@ function Products({ history }) {
           <div className="modal-container">
             <div className="modal">
               <h3>
-                You will delete {selectedProducts.length} items. Are you sure?
+                You will delete {selectedProducts.length} item
+                {selectedProducts.length > 1 && 's'}. Are you sure?
               </h3>
               <div className="row" style={{ display: 'flex' }}>
                 <Button
                   text="I'm sure!"
                   onClick={onDeleteProduct}
                   style={{ backgroundColor: '#f55f5f' }}
-                  isLoading={loading}
+                  isLoading={deleteLoading}
                 />
                 <Button text="Go back" onClick={() => setDeleteModal(false)} />
               </div>

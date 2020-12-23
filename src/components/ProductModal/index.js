@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FiPlus, FiEdit } from 'react-icons/fi';
+import { UserContext } from '../../context/UserContext';
+
 import Input from '../Input';
 import Button from '../Button';
 
-import { Container } from './styles';
-import { UserContext } from '../../context/UserContext';
 import { api } from '../../services/api';
+import { Container } from './styles';
 
 function ProductModal({ product, closeModal, productSetter: setProducts }) {
   const [description, setDescription] = useState(product?.description || '');
@@ -122,6 +123,7 @@ function ProductModal({ product, closeModal, productSetter: setProducts }) {
               error={errors.value}
               setValue={handleChangeValue}
               min={0}
+              step={0.01}
             />
             <div className="column">
               <span>Output value (BRL)</span>
