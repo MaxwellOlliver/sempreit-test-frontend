@@ -35,7 +35,7 @@ function Products({ history }) {
           authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
+
       setNext(response.data.next);
       setProducts(response.data.products);
       setLoading(false);
