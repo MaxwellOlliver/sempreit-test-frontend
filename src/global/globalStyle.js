@@ -11,7 +11,7 @@ export const Global = createGlobalStyle`
   
   html, body, input, button {
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
-    color: #fff;
+    color: #333;
     font-size: 14px;
   }
 
@@ -28,13 +28,18 @@ export const Global = createGlobalStyle`
   ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 8px;
     border-radius: 8px;
-    background: #5f5f6b;
+    background: #4f98ff;
   }
   ::-webkit-scrollbar-track {
-    background-color: #40404a;
+    background-color: #ccc;
     border-radius: 8px;
   }
   ::-webkit-scrollbar-thumb:hover {
     background-color: #52525e;
+  }
+
+  .Toastify__progress-bar {
+    background: #4f98ff !important;
+    color: #4f98ff !important;
   }
 `;

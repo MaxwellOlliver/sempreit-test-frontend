@@ -15,20 +15,19 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     (async () => {
-      const token = localStorage.getItem('SI_TOKEN');
-
-      if (token) {
-        _setToken(token);
+      const tk = localStorage.getItem('SI_TOKEN');
+      if (tk) {
+        _setToken(tk);
         if (!user.id) {
           const user = await api({
             method: 'get',
             url: '/me',
             headers: {
-              authorization: `Bearer ${token}`,
+              authorization: `Bearer ${tk}`,
             },
           });
 
-          setUser(user);
+          setUser(user.data);
         }
       }
     })();
