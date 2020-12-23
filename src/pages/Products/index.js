@@ -11,6 +11,7 @@ import Loader from '../../components/Loader';
 
 import { api } from '../../services/api';
 import { Container } from './styles';
+import BlackLoader from '../../assets/oval-black.svg';
 
 function Products({ history }) {
   const [products, setProducts] = useState([]);
@@ -20,6 +21,7 @@ function Products({ history }) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [next, setNext] = useState(null);
 
   const { user, removeToken, token } = useContext(UserContext);
 
@@ -33,7 +35,8 @@ function Products({ history }) {
           authorization: `Bearer ${token}`,
         },
       });
-
+      console.log(response.data);
+      setNext(response.data.next);
       setProducts(response.data.products);
       setLoading(false);
     })();
@@ -117,6 +120,26 @@ function Products({ history }) {
     setDeleteLoading(false);
   };
 
+  const getNextProductsMemoized = useCallback(async () => {
+    const ul = document.getElementById('product-list');
+    const value = (ul.scrollHeight - ul.offsetHeight) * 0.6;
+
+    if (next && ul.scrollTop >= value) {
+      const response = await api({
+        method: 'get',
+        url: next,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      setNext(response.data.next);
+      setProducts((state) => [...state, ...response.data.products]);
+    }
+  }, [next, token]);
+
+  const getNextProducts = debounce(getNextProductsMemoized, 300);
+
   return (
     <Container>
       {loading && <Loader />}
@@ -168,7 +191,7 @@ function Products({ history }) {
             <span>description</span>
             <span>value (BRL)</span>
           </label>
-          <ul>
+          <ul id="product-list" onScroll={getNextProducts}>
             {products.length === 0 && (
               <li className="no-products">
                 <span>no products added</span>
@@ -192,6 +215,11 @@ function Products({ history }) {
                 </span>
               </li>
             ))}
+            {next && (
+              <li className="loader">
+                <img src={BlackLoader} alt="loader" />
+              </li>
+            )}
           </ul>
         </section>
         {modal && (

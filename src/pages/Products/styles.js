@@ -186,9 +186,14 @@ export const Container = styled.div`
             padding-left: 20px;
           }
 
-          &.no-products {
+          &.no-products,
+          &.loader {
             border: none;
             justify-content: center;
+
+            img {
+              width: 25px;
+            }
 
             span {
               font-weight: 700;
