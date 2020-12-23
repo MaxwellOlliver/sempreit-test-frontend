@@ -154,7 +154,7 @@ function Products({ history }) {
             <h6>{user.name}</h6>
             <span>{user.email}</span>
           </div>
-          <button onClick={logout}>sair</button>
+          <button onClick={logout}>logout</button>
         </div>
       </nav>
       <div className="content">
